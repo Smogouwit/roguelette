@@ -782,6 +782,19 @@
             </div>
         </div>
     </div>
+    <!-- ================= MODALE DÉTECTION DE SAUVEGARDE ================= -->
+    <div id="modal-save-prompt" class="fixed inset-0 z-[8560] bg-black/90 hidden items-center justify-center p-4">
+        <div class="pixel-panel rounded-2xl p-6 lg:p-8 max-w-lg w-full border-4 border-emerald-400 text-center text-white">
+            <div class="text-4xl lg:text-5xl mb-3">💾🃏</div>
+            <span class="px-3 py-1 rounded text-xs font-bold uppercase bg-emerald-500 text-slate-950 pixel-title">Sauvegarde Détectée</span>
+            <h3 class="text-xl lg:text-2xl font-bold text-amber-300 mt-3 mb-2">Partie en cours trouvée !</h3>
+            <p id="save-prompt-details" class="text-sm lg:text-base text-slate-200 mb-6 leading-relaxed"></p>
+            <div class="flex gap-3">
+                <button type="button" id="btn-prompt-new-run" class="pixel-btn flex-1 py-3 rounded-lg font-bold bg-rose-600 text-white text-xs sm:text-sm uppercase pixel-title">Nouvelle Run</button>
+                <button type="button" id="btn-prompt-resume-run" class="pixel-btn flex-1 py-3 rounded-lg font-bold bg-emerald-600 text-white text-xs sm:text-sm uppercase pixel-title">Reprendre la Partie</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ================= MODALE INDEX / CODEX DES 63 JOKERS (UPSCALED SUR PC) ================= -->
     <div id="modal-codex" class="fixed inset-0 z-[7500] bg-black/90 hidden items-center justify-center p-3 sm:p-6 lg:p-8 overflow-y-auto">
@@ -1302,9 +1315,9 @@
             },
             {
                 id: 'high_roller', name: 'Flamberge', icon: '🃏', rarity: 'Épique', rarityWeight: 16,
-                pro: 'Ajoute 1 tranche CRITIQUE (Poids 38) et 1 tranche MYSTÈRE+ (Poids 38).',
+                pro: 'Ajoute 1 tranche CRITIQUE (Poids 38) et 1 tranche MYSTÈRE (Poids 38). Booste MYSTÈRE+ sous La Luxure !',
                 con: 'Augmente l\'Objectif du tour de +5%.',
-                desc: 'Enrichit la roue avec une tranche CRITIQUE et une tranche MYSTÈRE+ garantie sans malus de score.'
+                desc: 'Enrichit la roue avec une tranche CRITIQUE et une tranche MYSTÈRE (qui renforce les tranches MYSTÈRE+ si vous possédez La Luxure).'
             },
             {
                 id: 'necromancer', name: 'Nécromancien', icon: '💀', rarity: 'Épique', rarityWeight: 16,
@@ -1402,39 +1415,39 @@
             },
             {
                 id: 'sin_wrath', name: 'La Colère', icon: '🔥', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Ajoute 3 tranches ENFLAMMÉES : relance ultra-rapide (80% de chance de retomber sur Enflammée), +2.00x Élan et +500 pts (amplifiés par vos Jokers Base/Relance) !',
+                pro: 'Ajoute 3 tranches ENFLAMMÉES : sécurisées du Malus, +Chaîne temporaire amplifiée par vos Jokers (Surchauffe, Levier...) durant le tour !',
                 con: 'Coûte 3 Jokers. -1 ❤️ Vie Max définitif et impossible d\'utiliser des Boucliers 💠.',
-                desc: 'Joker Primordial : Déchaîne 3 tranches ENFLAMMÉES qui s\'enchaînent frénétiquement (80% de rester sur Enflammée) en faisant trembler l\'écran.'
+                desc: 'Joker Primordial : Les tranches ENFLAMMÉES s\'enchaînent sans jamais pouvoir tomber sur un Malus et font exploser votre Chaîne temporaire pendant le tour.'
             },
             {
                 id: 'sin_sloth', name: 'La Paresse', icon: '🦥', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Les RELANCES ne tombent jamais sur Malus, tranche MALUS -20%, effets de Chance x2 et +2000 au Score de Base !',
+                pro: 'DOUBLE TOUS LES EFFETS de tous vos autres Jokers, sécurise les Relances, Malus -20% et +2000 Base !',
                 con: 'Coûte 3 Jokers. Multiplicateur de base -0.20x.',
-                desc: 'Joker Primordial : Sécurise toutes les Relances, réduit le Malus de 20%, double tous vos effets de Chance (Draft, Rareté+, Soin, Dé Pipé) et ajoute +2000 au Score de Base, contre -0.20x au Multiplicateur de base.'
+                desc: 'Joker Primordial : Double la puissance de tous les autres Jokers de votre inventaire (stats, effets passifs et chances) et sécurise les Relances.'
             },
             {
                 id: 'sin_pride', name: 'L\'Orgueil', icon: '🦁', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Remplace les Bonus de base par des JACKPOTS, recharge +1 Bouclier 💠 toutes les 3 Chaînes, et réduit le risque de vol Malus à 5% !',
+                pro: 'Les tranches CRITIQUES donnent Score x6.0, +450 pts de Base et augmentent de +1.50x le Multiplicateur du tour ! Bonus de base ➔ JACKPOTS, +1 💠/3 Chaînes, vol à 5%.',
                 con: 'Coûte 3 Jokers. Convertit toutes les Relances en Critiques et -0.60x au multiplicateur.',
-                desc: 'Joker Primordial : Les tranches Bonus de départ deviennent des Jackpots et vos Chaînes génèrent des Boucliers, mais les Relances deviennent des Critiques.'
+                desc: 'Joker Primordial : Surcharge drastiquement les tranches Critiques (x6.0 points et +1.50x multiplicateur) et transforme vos Bonus de départ en Jackpots.'
             },
             {
                 id: 'sin_gluttony', name: 'La Gourmandise', icon: '🍖', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Multiplicateur x5, Score de Base x5, Chance Draft x3, +2 ❤️ Vies, +1000 pts × tours en Banque/tour, convertit les tranches spéciales en BONUS et ajoute 1 BANQUE !',
+                pro: 'Chaque case BONUS active +15% Potentiel, +2 Chaînes et +25% Banque ! Multi x5, Base x5, Draft x3, +2 ❤️, +1000 pts×tours/tour.',
                 con: 'Coûte 3 Jokers. Vous ne voyez plus qu\'1 seule carte en Draft et Objectif +15%.',
-                desc: 'Joker Primordial : Dévore les tranches spéciales pour les transformer en Bonus massifs (Base x5, Multi x5, Banque surchargée), mais limite vos Drafts à 1 carte.'
+                desc: 'Joker Primordial : Convertit les tranches spéciales en Bonus et déclenche une frénésie qui multiplie Potentiel, Chaîne et Banque à chaque Bonus touché.'
             },
             {
                 id: 'sin_envy', name: 'L\'Envie', icon: '🐍', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Supprime les Jokers Communs et Rares des Drafts (Épique/Légendaire/Primordial garantis), réduit le Malus de -33% et la Chaîne grimpe avec une courbe ultra-exponentielle !',
-                con: 'Coûte 3 Jokers. Les chances d\'obtenir un Draft sont plafonnées à 20% max.',
-                desc: 'Joker Primordial : Vous n\'obtenez plus jamais de Jokers Communs ou Rares et votre Chaîne suit une courbe exponentielle fulgurante, mais la chance de Draft est plafonnée à 20%.'
+                pro: 'Offre +5 Chaînes liées à L\'Envie, courbe de Chaîne exponentielle, supprime Communs/Rares des Drafts et Malus -33% !',
+                con: 'Coûte 3 Jokers. Chance de Draft plafonnée à 20% et la Chaîne bonus disparaît si L\'Envie est retirée.',
+                desc: 'Joker Primordial : Garantit des Drafts Épiques+ et lie un bonus de Chaîne exponentiel tant que vous possédez L\'Envie.'
             },
             {
                 id: 'sin_lust', name: 'La Luxure', icon: '💋', rarity: 'Primordial', rarityWeight: 3.0,
-                pro: 'Transforme toutes les tranches (hors Bonus/Malus) en MYSTÈRE+ et remplace les effets négatifs de Mystère par un méga-gain à 200% du Score ! Ajoute 1 MYSTÈRE+.',
+                pro: 'Exclusivité MYSTÈRE+ : chaque carte Flamberge ou Boîte Mystère possédée augmente de +50% les points, le % et le multiplicateur de MYSTÈRE+ !',
                 con: 'Coûte 3 Jokers. Toute la roue devient hautement imprévisible.',
-                desc: 'Joker Primordial : Convertit toutes les tranches spéciales en tranches MYSTÈRE+ euphoriques dont les effets autrefois négatifs deviennent des boosts de 200% du score.'
+                desc: 'Joker Primordial : Seule La Luxure génère des tranches MYSTÈRE+, dont la puissance grimpe avec vos Jokers Flamberge et Boîte Mystère.'
             }
         ];
 
@@ -1543,6 +1556,8 @@
                 streakStep: 0.10,
                 momentumMult: 0,
                 relanceChainCount: 0,
+                tempWrathStreak: 0,
+                nextDraftLuckBonus: 0,
                 lastSliceType: null,
                 bankPot: 40,
                 bankTurns: 0,
@@ -1997,6 +2012,27 @@
                 return AppState.rogue.inventory.find(j => j.rarity === 'Primordial') || null;
             },
 
+            FIXED_SINGLE_JOKERS: ['golden_parachute', 'vital_spark', 'guardian_angel', 'streak_healer', 'overheat', 'perpetual_engine'],
+
+            getSlothMult(jokerId = null) {
+                if (jokerId === 'sin_sloth') return 1;
+                return this.hasJoker('sin_sloth') ? 2 : 1;
+            },
+
+            EffectiveCount(id) {
+                const raw = this.countJoker(id);
+                if (raw === 0) return 0;
+                const tpl = JOKERS_POOL.find(j => j.id === id);
+                if (tpl && tpl.rarity === 'Primordial') return raw;
+                return raw * this.getSlothMult(id);
+            },
+
+            getEffectiveStreak() {
+                const r = AppState.rogue;
+                const envyLinkedBonus = this.hasJoker('sin_envy') ? 5 : 0;
+                return r.streak + envyLinkedBonus + (r.tempWrathStreak || 0);
+            },
+
             recalculateStats() {
                 const r = AppState.rogue;
                 let basePts = 100;
@@ -2014,7 +2050,12 @@
 
                 const totalJokersOwned = r.inventory.length;
 
-                for (const item of r.inventory) {
+                const slothMult = this.getSlothMult();
+                const effectiveStreak = this.getEffectiveStreak();
+                for (const rawItem of r.inventory) {
+                    const repeats = rawItem.rarity === 'Primordial' ? 1 : slothMult;
+                    for (let rep = 0; rep < repeats; rep++) {
+                        const item = rawItem;
                     switch (item.id) {
                         // --- COMMUNS (SANS MALUS) ---
                         case 'slice_bonus':
@@ -2091,7 +2132,7 @@
                             luckBoost += 25;
                             break;
                         case 'streak_catalyst':
-                            basePts += r.streak * 20;
+                            basePts += effectiveStreak.streak * 20;
                             break;
                         case 'golden_parachute':
                             basePts += 40;
@@ -2184,6 +2225,7 @@
                             malusMult *= 0.67;
                             break;
                     }
+                    }
                 }
                 r.maxLives = Math.max(1, Math.min(5, maxLives));
                 if (r.lives > r.maxLives) r.lives = r.maxLives;
@@ -2195,21 +2237,14 @@
                 r.malusWeightMultiplier = malusMult;
                 r.malusFlatReduction = malusFlat;
 
-                // Multiplicateur des effets de Chance si La Paresse est active (x2)
-                const slothLuckMult = this.hasJoker('sin_sloth') ? 2 : 1;
-
-                // Chance de Draft évolutive avec la Chaîne
-                const streakDraftStep = (this.hasJoker('streak_catalyst') ? 0.10 : 0.05) * slothLuckMult;
-                const bonusDraftAdd = Math.max(0, draftChance - 0.45) * slothLuckMult;
-                const bonusDraftPen = Math.min(0, draftChance - 0.45);
-                let computedDraftChance = 0.45 + bonusDraftAdd + bonusDraftPen + (r.streak * streakDraftStep);
+                const streakDraftStep = this.hasJoker('streak_catalyst') ? (0.05 + 0.05 * slothMult) : 0.05;
+                let computedDraftChance = draftChance + (effectiveStreak * streakDraftStep);
                 if (this.hasJoker('sin_gluttony')) computedDraftChance *= 3;
                 if (this.hasJoker('sin_envy')) {
                     computedDraftChance = Math.min(0.20, computedDraftChance);
                 }
                 r.draftBaseChance = Math.max(0.05, Math.min(0.95, computedDraftChance));
 
-                // Risque de vol sur Malus
                 if (this.hasJoker('sin_avarice')) {
                     r.stealRiskBase = 1.0;
                 } else if (this.hasJoker('sin_pride')) {
@@ -2218,32 +2253,31 @@
                     r.stealRiskBase = Math.max(0.0, Math.min(0.95, stealRisk));
                 }
 
-                // Bonus Rareté+ (doublé par La Paresse)
-                const streakLuckMult = this.hasJoker('fortune_charm') ? 15 : 7;
-                r.luckBoost = (luckBoost + (r.streak * streakLuckMult)) * slothLuckMult;
+                const streakLuckMult = this.hasJoker('fortune_charm') ? (7 * Math.pow(2, slothMult)) : 7;
+                r.luckBoost = luckBoost + (effectiveStreak * streakLuckMult) + (r.nextDraftLuckBonus || 0);
 
-                // Capacité de Draft
                 r.draftOptionsCount = this.hasJoker('sin_gluttony') ? 1 : Math.max(2, draftOptions);
                 r.draftPicksCount = this.hasJoker('sin_gluttony') ? 1 : Math.max(1, Math.min(r.draftOptionsCount, draftPicks));
+
             },
 
-            getTotalMultiplier() {
+          getTotalMultiplier() {
                 const r = AppState.rogue;
-                let streakBonus = r.streak * r.streakStep;
-                if (this.hasJoker('sin_envy') && r.streak > 0) {
-                    // Courbe exponentielle rééquilibrée pour L'Envie : puissante mais sans déborder en quadrillions dès le Palier VI
-                    const effectiveStreak = Math.min(r.streak, 28);
+                const effStreak = this.getEffectiveStreak();
+                let streakBonus = effStreak * r.streakStep;
+                if (this.hasJoker('sin_envy') && effStreak > 0) {
+                    const effectiveStreak = Math.min(effStreak, 28);
                     const baseExp = 0.22 * (Math.pow(1.22, effectiveStreak) - 1);
-                    const overflowExp = r.streak > 28
-                        ? baseExp * Math.pow(1.09, r.streak - 28)
+                    const overflowExp = effStreak > 28
+                        ? baseExp * Math.pow(1.09, effStreak - 28)
                         : baseExp;
-                    streakBonus = Math.max(r.streak * 0.16, overflowExp);
+                    streakBonus = Math.max(effStreak * 0.16, overflowExp);
                 }
 
                 let total = r.baseMult + streakBonus + r.momentumMult;
 
                 if (this.hasJoker('singularity')) {
-                    total *= Math.pow(1.75, this.countJoker('singularity'));
+                    total *= Math.pow(1.75, this.EffectiveCount('singularity'));
                 }
                 if (this.hasJoker('sin_gluttony')) {
                     total *= 5;
@@ -2325,9 +2359,34 @@
                 // Synergie Nécromancien (+60 Base et +0.20x Multi par tranche Malus sur la roue)
                 if (this.hasJoker('necromancer')) {
                     const malusCount = rawSlices.filter(s => s.type === 'malus').length;
-                    const countNecro = this.countJoker('necromancer');
+                    const countNecro = this.EffectiveCount('necromancer');
                     r.basePoints += malusCount * 60 * countNecro;
                     r.baseMult += malusCount * 0.20 * countNecro;
+                }
+
+                // Fusionner les tranches de même type au-delà de 10 tranches pour éviter que la roue devienne noire
+                if (rawSlices.length > 10) {
+                    const mergedMap = new Map();
+                    for (const s of rawSlices) {
+                        if (!mergedMap.has(s.type)) {
+                            mergedMap.set(s.type, { ...s });
+                        } else {
+                            mergedMap.get(s.type).weight += s.weight;
+                        }
+                    }
+                    rawSlices = Array.from(mergedMap.values());
+                }
+
+                // Garantir que la tranche JACKPOT ne descend jamais en dessous de 1%
+                const jackpotSlices = rawSlices.filter(s => s.type === 'jackpot');
+                if (jackpotSlices.length > 0) {
+                    const nonJackpotWeight = rawSlices.filter(s => s.type !== 'jackpot').reduce((acc, s) => acc + s.weight, 0);
+                    const currentJackpotWeight = jackpotSlices.reduce((acc, s) => acc + s.weight, 0);
+                    const minJackpotWeight = nonJackpotWeight / 99;
+                    if (currentJackpotWeight < minJackpotWeight) {
+                        const scale = minJackpotWeight / Math.max(0.0001, currentJackpotWeight);
+                        jackpotSlices.forEach(s => { s.weight *= scale; });
+                    }
                 }
 
                 return rawSlices;
@@ -2466,7 +2525,7 @@
                         break;
                     case 'high_roller':
                         addSlice('crit', 'CRITIQUE 💥', 38, '#F97316');
-                        addSlice('mystery_plus', 'MYSTÈRE+ 💋', 38, '#EC4899');
+                        addSlice('mystery', 'MYSTÈRE ❓', 38, '#A855F7');
                         r.turnQuota = Math.round(r.turnQuota * 1.05);
                         break;
                     case 'necromancer':
@@ -2491,6 +2550,13 @@
                             const victim = candidates[Math.floor(Math.random() * candidates.length)];
                             const idx = r.customSlices.indexOf(victim);
                             if (idx !== -1) r.customSlices.splice(idx, 1);
+
+                            const PURE_SLICE_JOKERS = ['small_reroll', 'piggy_slice', 'second_chance', 'crit_slice'];
+                            const ownerJoker = r.inventory.find(j => j.uid === victim.ownerUid);
+                            const remainingSlices = r.customSlices.filter(s => s.ownerUid === victim.ownerUid);
+                            if (ownerJoker && remainingSlices.length === 0 && PURE_SLICE_JOKERS.includes(ownerJoker.id)) {
+                                this.removeJokerByUid(ownerJoker.uid);
+                            }
                         }
                         addSlice('alchemist_bonus', 'ALCHIMIE x1.5 ⚗️', 48, '#14B8A6');
                         UIController.showToast('⚗️ ALCHIMIE : 1 tranche transmutée en ALCHIMIE x1.5 !');
@@ -2755,7 +2821,7 @@
             },
 
             spinWheel(options = {}) {
-                if (AppState.isSpinning) return;
+                if (AppState.isSpinning && !options.fromRelance && !options.fromFlaming) return;
                 if (!this.cacheValid) this.rebuildCache();
 
                 const slices = this.cachedSlices;
@@ -2774,7 +2840,11 @@
                     }
 
                     // La Colère : 80% de chance de retomber sur une tranche ENFLAMMÉE
+                   // La Colère : les tranches ENFLAMMÉES sont sécurisées du Malus
                     if (options.fromFlaming) {
+                        const nonMalus = candidateSlices.filter(s => s.type !== 'malus');
+                        if (nonMalus.length > 0) candidateSlices = nonMalus;
+
                         const flamingSlices = candidateSlices.filter(s => s.type === 'flaming');
                         const otherSlices = candidateSlices.filter(s => s.type !== 'flaming');
                         if (flamingSlices.length > 0 && Math.random() < 0.80) {
@@ -2798,15 +2868,23 @@
 
                 // Dé Pipé Anti-Malus (loaded_dice) : 50% de chance (100% avec La Paresse) de dévier un Malus vers un Bonus avec animation de suspens !
                 let loadedDiceRescueSlice = null;
-                if (AppState.mode === 'rogue' && chosenSlice.type === 'malus' && RogueMechanics.hasJoker('loaded_dice')) {
-                    const dodgeChance = RogueMechanics.hasJoker('sin_sloth') ? 1.0 : 0.50;
-                    if (Math.random() < dodgeChance) {
+                const loadedDiceAttempts = RogueMechanics.EffectiveCount('loaded_dice');
+                if (AppState.mode === 'rogue' && chosenSlice.type === 'malus' && loadedDiceAttempts > 0) {
+                    let dodged = false;
+                    for (let attempt = 0; attempt < loadedDiceAttempts; attempt++) {
+                        if (Math.random() < 0.50) {
+                            dodged = true;
+                            break;
+                        }
+                    }
+                    if (dodged) {
                         const bonusCandidates = slices.filter(s => s.type === 'bonus' || s.type === 'alchemist_bonus');
                         if (bonusCandidates.length > 0) {
                             loadedDiceRescueSlice = bonusCandidates[Math.floor(Math.random() * bonusCandidates.length)];
                         }
                     }
                 }
+            
 
                 const span = chosenSlice.endAngle - chosenSlice.startAngle;
                 const safeMargin = span * (0.22 + Math.random() * 0.56);
@@ -2903,9 +2981,10 @@
                                 } else {
                                     AppState.wheelAngle = phase2FinalAngle % twoPi;
                                     this.drawFrame();
-                                    AppState.isSpinning = false;
-                                    document.getElementById('btn-spin').disabled = false;
                                     const winner = this.getSliceUnderPointer(AppState.wheelAngle);
+                                    const isAutoSpinSlice = AppState.mode === 'rogue' && (winner.type === 'relance' || winner.type === 'flaming');
+                                    AppState.isSpinning = isAutoSpinSlice;
+                                    document.getElementById('btn-spin').disabled = isAutoSpinSlice;
                                     GameFlow.onSpinFinished(winner);
                                 }
                             };
@@ -2914,10 +2993,11 @@
                     } else {
                         AppState.wheelAngle = finalAngle % twoPi;
                         this.drawFrame();
-                        AppState.isSpinning = false;
-                        document.getElementById('btn-spin').disabled = false;
                         const winner = this.getSliceUnderPointer(AppState.wheelAngle);
-                        GameFlow.onSpinFinished(winner);
+                                    const isAutoSpinSlice = AppState.mode === 'rogue' && (winner.type === 'relance' || winner.type === 'flaming');
+                                    AppState.isSpinning = isAutoSpinSlice;
+                                    document.getElementById('btn-spin').disabled = isAutoSpinSlice;
+                                    GameFlow.onSpinFinished(winner);
                     }
                 };
 
@@ -2984,27 +3064,34 @@
                 const prevMult = RogueMechanics.getTotalMultiplier();
                 r.relanceChainCount += 1;
 
-                let momentumAdd = isFlaming ? 2.00 : 0.25;
-                if (!isFlaming) {
-                    if (RogueMechanics.hasJoker('perpetual_engine')) momentumAdd = 0.80;
-                    else if (RogueMechanics.hasJoker('dynamo')) momentumAdd = 0.55;
-                    if (RogueMechanics.hasJoker('relance_oil')) momentumAdd += 0.20;
-                } else if (RogueMechanics.hasJoker('dynamo')) {
-                    momentumAdd *= 1.5;
-                }
+                const dynamoCount = RogueMechanics.EffectiveCount('dynamo');
+                const oilCount = RogueMechanics.EffectiveCount('relance_oil');
+                const echoCount = RogueMechanics.EffectiveCount('echo_wheel');
+                const secondChanceCount = RogueMechanics.EffectiveCount('second_chance');
 
-                if (r.relanceChainCount >= 2) {
-                    let comboBoost = Math.pow(1.35, r.relanceChainCount - 1);
-                    if (RogueMechanics.hasJoker('relance_oil')) comboBoost *= 1.5;
-                    if (RogueMechanics.hasJoker('echo_wheel')) comboBoost *= 1.75;
-                    momentumAdd *= comboBoost;
-                }
+                let momentumAdd = 0;
+                if (isFlaming) {
+                    r.tempWrathStreak = (r.tempWrathStreak || 0) + 1;
+                    RogueMechanics.recalculateStats();
+                    momentumAdd = r.streakStep;
+                } else {
+                    momentumAdd = RogueMechanics.hasJoker('perpetual_engine')
+                        ? 0.80 * RogueMechanics.getSlothMult('perpetual_engine')
+                        : 0.25 + (dynamoCount * 0.30);
+                    momentumAdd += oilCount * 0.20;
 
-                r.momentumMult += momentumAdd;
+                    if (r.relanceChainCount >= 2) {
+                        let comboBoost = Math.pow(1.35, r.relanceChainCount - 1);
+                        if (oilCount > 0) comboBoost *= Math.pow(1.5, oilCount);
+                        if (echoCount > 0) comboBoost *= Math.pow(1.75, echoCount);
+                        momentumAdd *= comboBoost;
+                    }
+                    r.momentumMult += momentumAdd;
+                }
 
                 let relancePts = isFlaming ? 500 : 30;
-                if (RogueMechanics.hasJoker('second_chance')) relancePts += 65;
-                if (RogueMechanics.hasJoker('dynamo')) relancePts += 50;
+                relancePts += secondChanceCount * 65;
+                relancePts += dynamoCount * 50;
                 if (isFlaming) {
                     relancePts = Math.round(relancePts * (r.basePoints / 100));
                 }
@@ -3015,8 +3102,8 @@
                 const newMult = RogueMechanics.getTotalMultiplier();
                 SoundEngine.playBoom(isFlaming ? 'Primordial' : (r.relanceChainCount >= 2 ? 'Épique' : 'Rare'));
                 UIController.triggerScreenShake(isFlaming ? 'Primordial' : (r.relanceChainCount >= 2 ? 'Épique' : 'Rare'));
-                UIController.showEncoreBanner(r.relanceChainCount, momentumAdd, isFlaming);
-                UIController.showMultiplierUpBanner(prevMult, newMult, isFlaming ? '🔥 FURIE ENFLAMMÉE !' : `⚡ RELANCE COMBO x${r.relanceChainCount}`);
+                UIController.showEncoreBanner(r.relanceChainCount, newMult - prevMult, isFlaming);
+                UIController.showMultiplierUpBanner(prevMult, newMult, isFlaming ? `🔥 CHAÎNE ENFLAMMÉE +${r.tempWrathStreak} !` : `⚡ RELANCE COMBO x${r.relanceChainCount}`);
                 UIController.updateAll();
 
                 setTimeout(() => {
@@ -3062,14 +3149,23 @@
                         badge = '⚗️';
                         details.push(`<div class="text-teal-400 font-bold">⚗️ Bonus Alchimique : Score de Base x1.5 (${rawPoints} pts) !</div>`);
                     }
-                    // Hold-Up Bancaire (golden_bank) : 25% de la Banque versé sur chaque Bonus !
-                    if (RogueMechanics.hasJoker('golden_bank') && r.bankPot > 0) {
-                        const dividend = Math.round(r.bankPot * 0.25);
-                        rawPoints += dividend;
-                        details.push(`<div class="text-cyan-300 font-bold">💰 Dividende Hold-Up : +${dividend} pts issus de la Banque !</div>`);
+                    if (RogueMechanics.hasJoker('sin_gluttony')) {
+                        r.streak += 2;
+                        r.bankPot = Math.round(r.bankPot * 1.25) + 250;
+                        rawPoints = Math.round(rawPoints * 1.15);
+                        details.push(`<div class="text-amber-300 font-bold">🍖 Festin de Gourmandise : Potentiel x1.15, +2 Chaînes 🔥 et Banque +25% (+250 pts) !</div>`);
+                    }
+                    const goldenBankCount = RogueMechanics.EffectiveCount('golden_bank');
+                    if (goldenBankCount > 0 && r.bankPot > 0) {
+                        let totalDividend = 0;
+                        for (let i = 0; i < goldenBankCount; i++) {
+                            totalDividend += Math.round(r.bankPot * 0.25);
+                        }
+                        rawPoints += totalDividend;
+                        details.push(`<div class="text-cyan-300 font-bold">💰 Dividende Hold-Up (x${goldenBankCount}) : +${FormatUtils.pts(totalDividend)} pts issus de la Banque !</div>`);
                     }
                     const baseHealProb = RogueMechanics.hasJoker('vital_spark') ? 0.50 : 0.35;
-                    const healProb = Math.min(1.0, baseHealProb * (RogueMechanics.hasJoker('sin_sloth') ? 2 : 1));
+                    const healProb = Math.min(1.0, baseHealProb * RogueMechanics.getSlothMult('vital_spark'));
                     if (r.lives < r.maxLives && Math.random() < healProb) {
                         r.lives = Math.min(r.maxLives, r.lives + 1);
                         details.push(`<div class="text-rose-400 font-bold">💖 Soin sur Bonus (${Math.round(healProb * 100)}%) : +1 ❤️ Vie récupérée !</div>`);
@@ -3078,51 +3174,69 @@
                         triggerDraft = true;
                     }
                 } else if (slice.type === 'crit') {
-                    rawPoints = Math.round(r.basePoints * 2.5);
                     badge = '💥';
-                    details.push(`<div class="text-orange-400 font-bold">💥 Coup Critique : Score x2.5 et +2 Chaîne !</div>`);
+                    if (RogueMechanics.hasJoker('sin_pride')) {
+                        r.momentumMult += 1.50;
+                        rawPoints = Math.round((r.basePoints + 450) * 6.0);
+                        r.streak += 2;
+                        details.push(`<div class="text-amber-300 font-bold">🦁 Critique d'Orgueil : Multiplicateur +1.50x, Base +450 pts, Score x6.0 et +4 Chaînes 🔥 !</div>`);
+                    } else {
+                        rawPoints = Math.round(r.basePoints * 2.5);
+                        details.push(`<div class="text-orange-400 font-bold">💥 Coup Critique : Score x2.5 et +2 Chaîne !</div>`);
+                    }
                     if (Math.random() < r.draftBaseChance) triggerDraft = true;
                 } else if (slice.type === 'bank') {
                     badge = '🏦';
-                    const potBonus = RogueMechanics.hasJoker('compound_interest') ? Math.round(r.bankPot * 1.35) : r.bankPot;
+                    const compoundCount = RogueMechanics.EffectiveCount('compound_interest');
+                    const potBonus = compoundCount > 0 ? Math.round(r.bankPot * (1 + 0.35 * compoundCount)) : r.bankPot;
                     rawPoints = r.basePoints + potBonus;
-                    details.push(`<div class="text-cyan-400 font-bold">🏦 Cagnotte encaissée : +${potBonus} pts !</div>`);
+                    details.push(`<div class="text-cyan-400 font-bold">🏦 Cagnotte encaissée : +${FormatUtils.pts(potBonus)} pts !</div>`);
                     r.bankPot = RogueMechanics.hasJoker('central_bank') ? Math.max(80, Math.round(r.bankPot * 0.50)) : 40;
                 } else if (slice.type === 'jackpot') {
                     badge = '🌟';
                     rawPoints = Math.round(r.basePoints * 3.5);
+                    r.lives = r.maxLives;
+                    r.nextDraftLuckBonus = 500;
                     triggerDraft = true;
-                    details.push(`<div class="text-amber-300 font-bold">🌟 JACKPOT : Score x3.5 et Draft garanti !</div>`);
+                    details.push(`<div class="text-amber-300 font-bold">🌟 JACKPOT : Score x3.5, TOUTES VOS VIES RESTAURÉES (${r.lives}/${r.maxLives} ❤️) et Draft à +500% Rareté !</div>`);
                 } else if (slice.type === 'mystery' || slice.type === 'mystery_plus') {
-                    const isPlus = slice.type === 'mystery_plus' || RogueMechanics.hasJoker('sin_lust');
+                    const isPlus = slice.type === 'mystery_plus' && RogueMechanics.hasJoker('sin_lust');
                     badge = isPlus ? '💋' : '❓';
+                    const lustSynergyCards = RogueMechanics.EffectiveCount('high_roller') + RogueMechanics.EffectiveCount('mystery_box');
+                    const lustBoost = isPlus ? (1 + 0.50 * lustSynergyCards) : 1.0;
+                    if (isPlus && lustSynergyCards > 0) {
+                        r.momentumMult += 0.35 * lustSynergyCards;
+                        details.push(`<div class="text-pink-300 font-bold">💋 Synergie Luxure (${lustSynergyCards} carte(s) Mystère/Flamberge) : Gains Mystère+ x${lustBoost.toFixed(2)} et +${(0.35 * lustSynergyCards).toFixed(2)}x Multi !</div>`);
+                    }
                     const roll = Math.random();
                     if (roll < 0.20) {
-                        rawPoints = Math.round(r.basePoints * 2.4);
+                        rawPoints = Math.round(r.basePoints * 2.4 * lustBoost);
                         triggerDraft = true;
-                        details.push(`<div class="text-purple-300 font-bold">✨ Mystère (Jackpot Mystique) : Score x2.4 + Draft garanti !</div>`);
+                        details.push(`<div class="text-purple-300 font-bold">✨ Mystère (Jackpot Mystique) : Score x${(2.4 * lustBoost).toFixed(2)} + Draft garanti !</div>`);
                     } else if (roll < 0.38) {
-                        rawPoints = Math.round(r.basePoints * 1.6);
+                        rawPoints = Math.round(r.basePoints * 1.6 * lustBoost);
                         if (!RogueMechanics.hasJoker('sin_wrath') && r.shields < 5) {
                             r.shields = Math.min(5, r.shields + 1);
-                            details.push(`<div class="text-sky-300 font-bold">💠 Mystère (Bénédiction d'Éther) : Score x1.6 + 1 Bouclier 💠 généré !</div>`);
+                            details.push(`<div class="text-sky-300 font-bold">💠 Mystère (Bénédiction d'Éther) : Score x${(1.6 * lustBoost).toFixed(2)} + 1 Bouclier 💠 généré !</div>`);
                         } else {
-                            details.push(`<div class="text-sky-300 font-bold">⚡ Mystère (Bénédiction d'Éther) : Score x1.6 !</div>`);
+                            details.push(`<div class="text-sky-300 font-bold">⚡ Mystère (Bénédiction d'Éther) : Score x${(1.6 * lustBoost).toFixed(2)} !</div>`);
                         }
                     } else if (roll < 0.56) {
-                        rawPoints = Math.round(r.basePoints * 1.5);
-                        r.bankPot += 250;
-                        details.push(`<div class="text-cyan-300 font-bold">🏦 Mystère (Pluie d'Or) : Score x1.5 et +250 pts injectés dans la Banque !</div>`);
+                        rawPoints = Math.round(r.basePoints * 1.5 * lustBoost);
+                        const bankAdd = Math.round(250 * lustBoost);
+                        r.bankPot += bankAdd;
+                        details.push(`<div class="text-cyan-300 font-bold">🏦 Mystère (Pluie d'Or) : Score x${(1.5 * lustBoost).toFixed(2)} et +${bankAdd} pts injectés dans la Banque !</div>`);
                     } else if (roll < 0.72) {
-                        rawPoints = Math.round(r.basePoints * 1.75);
+                        rawPoints = Math.round(r.basePoints * 1.75 * lustBoost);
                         r.streak += 2;
-                        details.push(`<div class="text-orange-400 font-bold">🔥 Mystère (Surcharge de Série) : Score x1.75 et +2 Chaînes 🔥 supplémentaires !</div>`);
+                        details.push(`<div class="text-orange-400 font-bold">🔥 Mystère (Surcharge de Série) : Score x${(1.75 * lustBoost).toFixed(2)} et +2 Chaînes 🔥 supplémentaires !</div>`);
                         if (Math.random() < r.draftBaseChance) triggerDraft = true;
                     } else if (roll < 0.87) {
                         if (isPlus) {
-                            rawPoints = Math.round(r.basePoints * 2.0);
-                            r.bankPot += 150;
-                            details.push(`<div class="text-pink-400 font-bold">💋 Mystère+ (Euphorie Dorée) : Score propulsé à 200% (x2.0) et +150 pts en Banque !</div>`);
+                            rawPoints = Math.round(r.basePoints * 2.0 * lustBoost);
+                            const bankAdd = Math.round(150 * lustBoost);
+                            r.bankPot += bankAdd;
+                            details.push(`<div class="text-pink-400 font-bold">💋 Mystère+ (Euphorie Dorée) : Score propulsé à ${Math.round(200 * lustBoost)}% (x${(2.0 * lustBoost).toFixed(2)}) et +${bankAdd} pts en Banque !</div>`);
                         } else {
                             rawPoints = Math.round(r.basePoints * 0.65);
                             const lostBank = Math.round(r.bankPot * 0.25);
@@ -3131,9 +3245,9 @@
                         }
                     } else {
                         if (isPlus) {
-                            rawPoints = Math.round(r.basePoints * 2.0);
+                            rawPoints = Math.round(r.basePoints * 2.0 * lustBoost);
                             r.turnQuota = Math.max(15, Math.round(r.turnQuota * 0.92));
-                            details.push(`<div class="text-pink-400 font-bold">💋 Mystère+ (Transe Pure) : Score propulsé à 200% (x2.0) et Objectif réduit de -8% !</div>`);
+                            details.push(`<div class="text-pink-400 font-bold">💋 Mystère+ (Transe Pure) : Score propulsé à ${Math.round(200 * lustBoost)}% (x${(2.0 * lustBoost).toFixed(2)}) et Objectif réduit de -8% !</div>`);
                         } else {
                             rawPoints = Math.round(r.basePoints * 0.75);
                             r.turnQuota = Math.round(r.turnQuota * 1.05);
@@ -3201,6 +3315,7 @@
                 r.streak = 0;
                 r.momentumMult = 0;
                 r.relanceChainCount = 0;
+                r.tempWrathStreak = 0; 
 
                 let dmg = RogueMechanics.hasJoker('double_edge') ? 2 : 1;
                 if (RogueMechanics.hasJoker('guardian_angel')) {
@@ -3270,9 +3385,10 @@
                 r.turnAccumulatedScore = 0;
                 r.momentumMult = 0;
                 r.relanceChainCount = 0;
+                r.tempWrathStreak = 0;
 
                 const nextPalier = RogueMechanics.getPalierInfo(r.turnNumber);
-                const dilationCount = RogueMechanics.countJoker('time_dilation');
+                const dilationCount = RogueMechanics.EffectiveCount('time_dilation');
                 // À partir de Ω-5 (ignoreDilation: true), la Dilatation Temporelle ne freine plus l'explosion exponentielle
                 const dilationFactor = (dilationCount > 0 && !nextPalier.ignoreDilation)
                     ? Math.pow(0.55, dilationCount)
@@ -3312,6 +3428,9 @@
                         if (activeSin && activeSin.id === j.id) return false;
                     }
                     if (envyActive && (j.rarity === 'Commun' || j.rarity === 'Rare')) {
+                        return false;
+                    }
+                    if (RogueMechanics.FIXED_SINGLE_JOKERS.includes(j.id) && RogueMechanics.hasJoker(j.id)) {
                         return false;
                     }
                     return true;
@@ -3360,6 +3479,10 @@
                 container.innerHTML = '';
 
                 const cards = this.drawCards(r.draftOptionsCount);
+                if (r.nextDraftLuckBonus > 0) {
+                    r.nextDraftLuckBonus = 0;
+                    RogueMechanics.recalculateStats();
+                }
                 // Vitesse d'apparition dynamique : plus il y a de cartes (ex: Clairvoyance), plus la cadence s'accélère
                 const stepDelayMs = cards.length >= 5 ? 120 : cards.length === 4 ? 165 : 230;
 
@@ -4112,7 +4235,7 @@
                 const healPct = Math.min(100, baseHealPct * (RogueMechanics.hasJoker('sin_sloth') ? 2 : 1));
                 document.getElementById('rogue-damage-info').textContent = `Bonus : ${healPct}% Soin ❤️`;
 
-                document.getElementById('rogue-streak-badge').innerHTML = `Chaîne : ${r.streak} 🔥 (<span id="rogue-streak-step">${RogueMechanics.hasJoker('sin_envy') ? 'Exp++ 🐍' : `+${r.streakStep.toFixed(2)}x`}</span>)`;
+                document.getElementById('rogue-streak-badge').innerHTML = `Chaîne : ${RogueMechanics.getEffectiveStreak} 🔥 (<span id="rogue-streak-step">${RogueMechanics.hasJoker('sin_envy') ? 'Exp++ 🐍' : `+${r.streakStep.toFixed(2)}x`}</span>)`;
                 document.getElementById('rogue-momentum').textContent = `+${r.momentumMult.toFixed(2)}x`;
                 document.getElementById('rogue-draft-capacity').textContent = `Draft : ${r.draftPicksCount} / ${r.draftOptionsCount} cartes`;
 
@@ -4146,12 +4269,69 @@
                 }
             },
 
+            getStackedSummaryText(joker, effectiveCount) {
+                if (effectiveCount <= 1) return '';
+                const r = AppState.rogue;
+                const totalJokers = r.inventory.length;
+                const map = {
+                    'slice_bonus': `+${20 * effectiveCount} pts au Score de Base et ${effectiveCount} tranches BONUS+`,
+                    'fine_file': `Poids des Malus x${Math.pow(0.78, effectiveCount).toFixed(2)} et +${30 * effectiveCount} pts de Base`,
+                    'eraser_crumb': `-${15 * effectiveCount} poids Malus et +${(0.20 * effectiveCount).toFixed(2)}x Multiplicateur`,
+                    'gold_chips': `+${65 * effectiveCount} pts de Base et +${(0.15 * effectiveCount).toFixed(2)}x Multiplicateur`,
+                    'small_reroll': `+${20 * effectiveCount} pts de Base et ${effectiveCount} tranches RELANCE`,
+                    'piggy_slice': `+${45 * effectiveCount} pts/tour en Banque`,
+                    'mystery_box': `+${25 * effectiveCount}% Rareté+ au Draft`,
+                    'joker_collector': `+${25 * effectiveCount * totalJokers} pts de Base et +${(0.10 * effectiveCount * totalJokers).toFixed(2)}x Multiplicateur`,
+                    'heart_ruby': `+${15 * effectiveCount * r.lives} pts de Base et +${(0.15 * effectiveCount * r.lives).toFixed(2)}x Multiplicateur`,
+                    'bandaid': `+${effectiveCount} ❤️ Vie Max et +${25 * effectiveCount} pts de Base`,
+                    'mini_barrier': `+${(0.20 * effectiveCount).toFixed(2)}x Multiplicateur`,
+                    'four_leaf_sticker': `+${35 * effectiveCount}% Rareté+ et +${10 * effectiveCount}% chance de Draft`,
+                    'safety_cushion': `-${10 * effectiveCount}% risque de vol et +${35 * effectiveCount} pts de Base`,
+                    'quota_brake': `+${(0.15 * effectiveCount).toFixed(2)}x Multiplicateur`,
+                    'relance_oil': `+${(0.20 * effectiveCount).toFixed(2)}x Élan/Relance et x${Math.pow(1.5, effectiveCount).toFixed(2)} combo`,
+                    'lucky_penny': `+${12 * effectiveCount}% chance de Draft et +${25 * effectiveCount}% Rareté+`,
+                    'score_climber': `Jusqu'à +${(1.50 * effectiveCount).toFixed(2)}x Multiplicateur max`,
+                    'purifying_salt': `Poids des Malus x${Math.pow(0.65, effectiveCount).toFixed(2)}`,
+                    'bank_leverage': `+${(0.15 * effectiveCount * Math.floor(r.bankPot / 50)).toFixed(2)}x Multiplicateur actuel`,
+                    'compound_interest': `+${35 * effectiveCount}% lors de l'encaissement de la Banque`,
+                    'second_chance': `+${65 * effectiveCount} pts gagnés à chaque Relance`,
+                    'echo_wheel': `Multiplie par x${Math.pow(1.75, effectiveCount).toFixed(2)} l'Élan des Relances consécutives`,
+                    'dynamo': `+${(0.25 + 0.30 * effectiveCount).toFixed(2)}x d'Élan et +${50 * effectiveCount} pts par Relance`,
+                    'fortune_charm': `+${65 * effectiveCount}% Rareté+ au Draft`,
+                    'clairvoyance': `+${effectiveCount} carte(s) proposée(s) et +${25 * effectiveCount}% Rareté+`,
+                    'streak_catalyst': `+${20 * effectiveCount * RogueMechanics.getEffectiveStreak()} pts de Base actuels`,
+                    'ether_shield': `+${45 * effectiveCount * r.shields} pts de Base actuels`,
+                    'vampirism': `+${90 * effectiveCount * Math.max(0, r.maxLives - r.lives)} Base et +${(0.25 * effectiveCount * Math.max(0, r.maxLives - r.lives)).toFixed(2)}x Multi`,
+                    'joker_synergy': `+${(0.18 * effectiveCount * totalJokers).toFixed(2)}x Multiplicateur actuel`,
+                    'velvet_dice': `+${90 * effectiveCount}% Rareté+, +${15 * effectiveCount}% Draft, Malus x${Math.pow(0.80, effectiveCount).toFixed(2)}`,
+                    'all_in_chip': `+${(1.25 * effectiveCount).toFixed(2)}x Multiplicateur et -${15 * effectiveCount}% chance Draft`,
+                    'immortal_heart': `+${(0.20 * effectiveCount * r.lives).toFixed(2)}x Multiplicateur actuel`,
+                    'double_edge': `Score de Base x${Math.pow(1.85, effectiveCount).toFixed(2)}`,
+                    'necromancer': `+${60 * effectiveCount} Base et +${(0.20 * effectiveCount).toFixed(2)}x Multi par tranche Malus`,
+                    'time_dilation': `Hausse du Quota multipliée par x${Math.pow(0.55, effectiveCount).toFixed(2)}`,
+                    'golden_bank': `Verse ${25 * effectiveCount}% de la Banque à chaque Bonus`,
+                    'berserker': `+${(1.10 * effectiveCount).toFixed(2)}x Multiplicateur et +${12 * effectiveCount}% risque de vol`,
+                    'loaded_dice': `${Math.round((1 - Math.pow(0.5, effectiveCount)) * 100)}% de chance cumulée d'éviter un Malus (${effectiveCount} jets à 50%)`,
+                    'score_tycoon': `Jusqu'à +${(3.00 * effectiveCount).toFixed(2)}x Multiplicateur et +${360 * effectiveCount} Base`,
+                    'alchemist': `+${140 * effectiveCount} pts au Score de Base`,
+                    'ouroboros': `Poids des Malus divisé par ${Math.pow(2.5, effectiveCount).toFixed(2)}`,
+                    'plutocracy': `+${effectiveCount} choix par Draft et +${effectiveCount} carte(s) proposée(s)`,
+                    'singularity': `Multiplicateur Total x${Math.pow(1.75, effectiveCount).toFixed(2)}`,
+                    'central_bank': `+${(r.bankPot * 0.01 * effectiveCount).toFixed(2)}x au Multiplicateur actuel`,
+                    'pantheon_crown': `+${(0.35 * effectiveCount * totalJokers).toFixed(2)}x Multiplicateur actuel`
+                };
+                return map[joker.id] || `Effet cumulé x${effectiveCount} actif`;
+            },
+
             attachTooltip(el, joker, count) {
                 const tooltip = document.getElementById('global-tooltip');
                 const show = (e) => {
                     const st = RARITY_STYLES[joker.rarity] || RARITY_STYLES['Commun'];
                     const conColor = joker.con.startsWith('Aucune') ? 'text-sky-300' : 'text-rose-400';
                     const conIcon = joker.con.startsWith('Aucune') ? '✨' : '⚠️';
+                    const effectiveCount = RogueMechanics.EffectiveCount(joker.id);
+                    const stackedText = this.getStackedSummaryText(joker, effectiveCount);
+                    const slothTag = (RogueMechanics.hasJoker('sin_sloth') && joker.rarity !== 'Primordial') ? ' • Doublé par La Paresse 🦥' : '';
                     tooltip.innerHTML = `
                         <div class="flex items-center justify-between mb-1.5">
                             <span class="font-bold text-xs text-amber-300 pixel-title">${joker.icon} ${joker.name} ${count > 1 ? `(x${count})` : ''}</span>
@@ -4160,6 +4340,7 @@
                         <p class="text-slate-200 text-[11px] mb-2">${joker.desc}</p>
                         <div class="text-emerald-400 font-bold text-[11px]">✅ ${joker.pro}</div>
                         <div class="${conColor} font-semibold text-[11px] mt-0.5">${conIcon} ${joker.con}</div>
+                        ${effectiveCount > 1 ? `<div class="mt-2 pt-1.5 border-t border-amber-400/40 text-amber-300 font-bold text-[11px]">⚡ Cumul actif (x${effectiveCount}${slothTag}) : ${stackedText}</div>` : ''}
                     `;
                     tooltip.classList.remove('hidden');
                     tooltip.style.opacity = '1';
@@ -4558,14 +4739,10 @@
 
             async init() {
                 // 1. Restauration locale synchrone immédiate avant que l'interface n'écrase quoi que ce soit
+                // 1. Récupération de la clé IP en cache uniquement (sans activer hasStartedRun en silence)
                 try {
                     const cachedIp = localStorage.getItem('roulette_cached_ip_key');
                     if (cachedIp) this.ipKey = cachedIp;
-                    const localKey = this.ipKey ? `roulette_save_${this.ipKey}` : 'roulette_save_default';
-                    const rawLocal = localStorage.getItem(localKey) || localStorage.getItem('roulette_save_latest');
-                    if (rawLocal) {
-                        this.applySavedPayload(JSON.parse(rawLocal), false);
-                    }
                 } catch (e) {}
 
                 // 2. Résolution IP + Connexion Cloud en arrière-plan
@@ -4810,9 +4987,40 @@
                         }
                     }
 
-                    if (savedData) {
-                        this.applySavedPayload(savedData, true);
-                        this.setStatus('Run Synchronisée', true);
+                   if (savedData) {
+                        const sr = savedData.rogue;
+                        const hasRealProgress = savedData.rogueActive && sr && sr.lives > 0 && (
+                            sr.turnNumber > 1 || (sr.score || 0) > 0 || (Array.isArray(sr.inventory) && sr.inventory.length > 0)
+                        );
+
+                        if (hasRealProgress) {
+                            const modalPrompt = document.getElementById('modal-save-prompt');
+                            const detailsEl = document.getElementById('save-prompt-details');
+                            detailsEl.innerHTML = `Une sauvegarde a été trouvée sur cet appareil :<br><strong class="text-amber-300">Tour #${sr.turnNumber || 1} • Score : ${FormatUtils.pts(sr.score || 0)} pts • ${(sr.inventory || []).length} Joker(s)</strong>.<br>Que souhaitez-vous faire ?`;
+
+                            modalPrompt.classList.remove('hidden');
+                            modalPrompt.classList.add('flex');
+
+                            document.getElementById('btn-prompt-resume-run').onclick = () => {
+                                modalPrompt.classList.add('hidden');
+                                modalPrompt.classList.remove('flex');
+                                AppState.mode = 'rogue';
+                                this.applySavedPayload(savedData, true);
+                                UIController.resumeExistingRogueRun('Sauvegarde Restaurée', 'REPRISE DE LA RUN');
+                                this.setStatus('Run Synchronisée', true);
+                            };
+
+                            document.getElementById('btn-prompt-new-run').onclick = () => {
+                                modalPrompt.classList.add('hidden');
+                                modalPrompt.classList.remove('flex');
+                                this.clearActiveRun();
+                                AppState.mode = 'rogue';
+                                UIController.startNewRogueRun(true);
+                            };
+                        } else {
+                            savedData.rogueActive = false;
+                            this.applySavedPayload(savedData, false);
+                        }
                     }
                 } catch (e) {
                     this.isRestoring = false;
