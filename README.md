@@ -1,1 +1,3 @@
-# roguelette
+# This is a personal project called Roguelette, which is heavily inspire of Balatro. If you stumble upon it, you can try and give it a shot at https://smogouwit.github.io/roguelette/
+For user's notice, it is entirely vibecoded, although I try as much as possible to keep it ethical, I barely know enough about code to keep my lines simples, and this a way for me to actually understand "complex" coding better. It isn't a serious project and you shouldn't pay much attention to it. Some lines might mention Balatro or Terraria too, which I wanted to use as a base for the graphic and pixelized design, do not see any kind of plagiarism in those. I have a lot of respect for ACTUAL game developers who put their souls in games ideas and designs. I do not call myself a developer either, and I do not let the AI imagine things by itself. Every ideas come from me and the people around me.
+It is in French.
