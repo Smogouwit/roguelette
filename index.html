@@ -3200,11 +3200,12 @@
                     triggerDraft = true;
                     details.push(`<div class="text-amber-300 font-bold">🌟 JACKPOT : Score x3.5, TOUTES VOS VIES RESTAURÉES (${r.lives}/${r.maxLives} ❤️) et Draft à +500% Rareté !</div>`);
                 } else if (slice.type === 'mystery' || slice.type === 'mystery_plus') {
-                    const isPlus = slice.type === 'mystery_plus' && RogueMechanics.hasJoker('sin_lust');
+                    const isPlus = slice.type === 'mystery_plus';
+                    const lustActive = isPlus && RogueMechanics.hasJoker('sin_lust');
                     badge = isPlus ? '💋' : '❓';
                     const lustSynergyCards = RogueMechanics.EffectiveCount('high_roller') + RogueMechanics.EffectiveCount('mystery_box');
-                    const lustBoost = isPlus ? (1 + 0.50 * lustSynergyCards) : 1.0;
-                    if (isPlus && lustSynergyCards > 0) {
+                    const lustBoost = lustActive ? (1 + 0.50 * lustSynergyCards) : 1.0;
+                    if (lustActive && lustSynergyCards > 0) {
                         r.momentumMult += 0.35 * lustSynergyCards;
                         details.push(`<div class="text-pink-300 font-bold">💋 Synergie Luxure (${lustSynergyCards} carte(s) Mystère/Flamberge) : Gains Mystère+ x${lustBoost.toFixed(2)} et +${(0.35 * lustSynergyCards).toFixed(2)}x Multi !</div>`);
                     }
@@ -4235,7 +4236,7 @@
                 const healPct = Math.min(100, baseHealPct * (RogueMechanics.hasJoker('sin_sloth') ? 2 : 1));
                 document.getElementById('rogue-damage-info').textContent = `Bonus : ${healPct}% Soin ❤️`;
 
-                document.getElementById('rogue-streak-badge').innerHTML = `Chaîne : ${RogueMechanics.getEffectiveStreak} 🔥 (<span id="rogue-streak-step">${RogueMechanics.hasJoker('sin_envy') ? 'Exp++ 🐍' : `+${r.streakStep.toFixed(2)}x`}</span>)`;
+                document.getElementById('rogue-streak-badge').innerHTML = `Chaîne : ${RogueMechanics.getEffectiveStreak()} 🔥 (<span id="rogue-streak-step">${RogueMechanics.hasJoker('sin_envy') ? 'Exp++ 🐍' : `+${r.streakStep.toFixed(2)}x`}</span>)`;
                 document.getElementById('rogue-momentum').textContent = `+${r.momentumMult.toFixed(2)}x`;
                 document.getElementById('rogue-draft-capacity').textContent = `Draft : ${r.draftPicksCount} / ${r.draftOptionsCount} cartes`;
 
