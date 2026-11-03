@@ -2132,7 +2132,7 @@
                             luckBoost += 25;
                             break;
                         case 'streak_catalyst':
-                            basePts += effectiveStreak.streak * 20;
+                            basePts += effectiveStreak * 20;
                             break;
                         case 'golden_parachute':
                             basePts += 40;
@@ -2205,6 +2205,9 @@
                         case 'central_bank':
                             baseMult += (r.bankPot * 0.01);
                             break;
+                        case 'pantheon_crown':
+                            baseMult += 0.35 * totalJokersOwned;
+                            break;
                         // --- PRIMORDIALES (LES 7 PÉCHÉS CAPITAUX) ---
                         case 'sin_wrath':
                             maxLives = Math.max(1, maxLives - 1);
@@ -2220,6 +2223,7 @@
                             break;
                         case 'sin_gluttony':
                             basePtsMult *= 5;
+                            maxLives += 2;
                             break;
                         case 'sin_envy':
                             malusMult *= 0.67;
